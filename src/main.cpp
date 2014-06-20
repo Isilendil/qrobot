@@ -4,6 +4,7 @@
 
 #include "SpeechInput.h"
 #include "SpeechOutput.h"
+#include "SemanticAnalysis.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ void waitingForSpeechInput()
 	while(true)
 	{
 		speechInput = SpeechInput::Instance()->waitingForInput();
-		if (speechInput == "登录")
+		if (SemanticAnalysis::Instance()->synonymous(speechInput, "登录"))
 		{
 			cout << "登录" << endl;
 			bool successful = false;
@@ -35,7 +36,7 @@ void waitingForSpeechInput()
 				SpeechOutput::Instance()->speakUp("密码错误");
 				SpeechOutput::Instance()->speakUp("是否需要重新登录");
 				speechInput = SpeechInput::Instance()->waitingForInput();
-				if (speechInput == "是")
+		    if (SemanticAnalysis::Instance()->synonymous(speechInput, "是"))
 				{
 					continue;
 				}
@@ -54,16 +55,21 @@ void waitingForSpeechInput()
 				SpeechOutput::Instance()->speakUp("登录失败");
 			}
 		}
-		else if (speechInput == "查询图书")
+		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "查询图书"))
 		{
 			searchForBooks();
 		}
-		else if (speechInput == "查询个人信息")
+		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "查询个人信息"))
 		{
 			personalInformationManage();
 		}
+		else if(SemanticAnalysis::Instance()->synonymous(speechInput, "再见"))
+		{
+			break;
+		}
 		else
 		{
+			SpeechOutput::Instance()->speakUp("您说啥");
 		}
 	}
 	SpeechOutput::Instance()->speakUp("线程结束");
@@ -93,6 +99,42 @@ bool login()
 
 void searchForBooks()
 {
+	bool inputError = true;
+	string speechInput;
+	do
+	{
+	  SpeechOutput::Instance()->speakUp("请选择查询方式");
+	  SpeechOutput::Instance()->speakUp("题名责任者还是ISBN号");
+		speechInput = SpeechInput::Instance()->waitingForInput();
+		if (SemanticAnalysis::Instance()->synonymous(speechInput, "题名"))
+		{
+			//search
+			inputError = false;
+		}
+		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "责任者"))
+		{
+			//search
+			inputError = false;
+		}
+		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "ISBN号"))
+		{
+			//search
+			inputError = false;
+		}
+		else
+		{
+			SpeechOutput::Instance()->speakUp("输入错误");
+			SpeechOutput::Instance()->speakUp("是否重新选择");
+		  speechInput = SpeechInput::Instance()->waitingForInput();
+			if (SemanticAnalysis::Instance()->synonymous(speechInput, "是"))
+			{
+			}
+			else
+			{
+				inputError = false;
+			}
+		}
+	} while (inputError);
 }
 
 void personalInformationManage()

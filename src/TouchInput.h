@@ -1,6 +1,8 @@
 //TouchInput.h
 //class TouchInput
 
+#include "../include/QrobotController.h"
+
 class TouchInput
 {
 public:
