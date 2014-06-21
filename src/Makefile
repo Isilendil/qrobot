@@ -1,46 +1,28 @@
 
-#main : main.o SpeechInput.o SpeechOutput.o TouchInput.o ActionOutput.o \
-       #ShellInput.o ShellOutput.o LightOutput.o \
-			 #DataBaseInput.o DataBaseOutput.o DiskInput.o DiskOutput.o \
-			 #CameraInput.o MonitorImageOutput.o EyesImageOutput.o
-	#g++ main.o SpeechInput.o SpeechOutput.o TouchInput.o ActionOutput.o \
-	    #ShellInput.o ShellOutput.o LightOutput.o \
-			#DataBaseInput.o DataBaseOutput.o DiskInput.o DiskOutput.o \
-			#CameraInput.o MonitorImageOutput.o EyesImageOutput.o \
-			#-o main -pthread -std=c++0x
-main : main.o SpeechInput.o SpeechOutput.o \
-       SemanticAnalysis.o
-	g++ main.o SpeechInput.o SpeechOutput.o \
-	    SemanticAnalysis.o \
-			-o main -pthread -std=c++0x
+main : main.o SpeechInput.o SpeechOutput.o  \
+       SemanticAnalysis.o Logger.o
+	g++ main.o SpeechInput.o SpeechOutput.o  \
+	    SemanticAnalysis.o Logger.o \
+			-L"../lib" -lqcontroller \
+			-o ../bin/main -pthread -std=c++0x; \
+	export LD_LIBRARY_PATH="../lib":$$LD_LIBRARY_PATH
 
-main.o : main.cpp
+main.o : common.h main.cpp
 	g++ -c main.cpp -pthread -std=c++0x
 
-SpeechInput.o : SpeechInput.h SpeechInput.cpp
+SpeechInput.o : common.h SpeechInput.h SpeechInput.cpp
 	g++ -c SpeechInput.cpp
 
-SpeechOutput.o : SpeechOutput.h SpeechOutput.cpp
+SpeechOutput.o : common.h SpeechOutput.h SpeechOutput.cpp
 	g++ -c SpeechOutput.cpp
 
-SemanticAnalysis.o : SemanticAnalysis.h SemanticAnalysis.cpp
+SemanticAnalysis.o : common.h SemanticAnalysis.h SemanticAnalysis.cpp
 	g++ -c SemanticAnalysis.cpp
 
-#TouchInput.o : TouchInput.h TouchInput.cpp
-	#g++ -c TouchInput.cpp
-#
-#ActionOutput.o : ActionOutput.h ActionOutput.cpp
-	#g++ -c ActionOutput.cpp
-#
-#ShellInput.o : ShellInput.h ShellInput.cpp
-	#g++ -c ShellInput.cpp
-#
-#ShellOutput.o : ShellOutput.h ShellOutput.cpp
-	#g++ -c ShellOutput.cpp
-#
-#LightOutput.o : LightOutput.h LightOutput.cpp
-	#g++ -c LightOutput.cpp
-#
+Logger.o : common.h Logger.h Logger.cpp
+	g++ -c Logger.cpp
+
+
 #DataBaseInput.o : DataBaseInput.h DataBaseInput.cpp
 	#g++ -c DataBaseInput.cpp
 #
@@ -59,8 +41,7 @@ SemanticAnalysis.o : SemanticAnalysis.h SemanticAnalysis.cpp
 #MonitorImageOutput.o : MonitorImageOutput.h MonitorImageOutput.cpp
 	#g++ -c MonitorImageOutput.cpp
 #
-#EyesImageOutput.o : EyesImageOutput.h EyesImageOutput.cpp
-	#g++ -c EyesImageOutput.cpp
-#
+
 clean : 
-	rm main main.o SpeechInput.o SemanticAnalysis.o
+	rm ../bin/main main.o SpeechInput.o SpeechOutput.o  \
+	        SemanticAnalysis.o Logger.o

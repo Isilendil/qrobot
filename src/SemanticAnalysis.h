@@ -1,6 +1,9 @@
 //SemanticAnalysis.h
 //class SemanticAnalysis 
 
+#ifndef _SEMANTICANALYSIS_H_
+#define _SEMANTICANALYSIS_H_
+
 #include <string>
 
 class SemanticAnalysis 
@@ -16,3 +19,5 @@ private:
   static SemanticAnalysis *instance;
 
 };
+
+#endif

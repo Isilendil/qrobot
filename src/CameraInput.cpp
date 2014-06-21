@@ -1,16 +1,16 @@
-//LightOutput.cpp
+//CameraInput.cpp
 
-LightOutput *LightOutput::instance = 0;
+CameraInput *CameraInput::instance = 0;
 
-LightOutput::LightOutput()
+CameraInput::CameraInput()
 {
 }
 
-LightOutput* LightOutput::Instance()
+CameraInput* CameraInput::Instance()
 {
 	if (instance == 0)
 	{
-		instance = new LightOutput;
+		instance = new CameraInput;
 	}
 	return instance;
 }

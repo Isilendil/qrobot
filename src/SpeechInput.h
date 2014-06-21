@@ -1,5 +1,9 @@
 //SpeechInput.h
 //class SpeechInput
+
+#ifndef _SPEECHINPUT_H_
+#define _SPEECHINPUT_H_
+
 #include <string>
 #include <iostream>
 
@@ -16,3 +20,5 @@ private:
   static SpeechInput *instance;
 
 };
+
+#endif

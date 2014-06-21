@@ -2,16 +2,16 @@
 #include <unistd.h>
 #include <thread>
 
-#include "SpeechInput.h"
-#include "SpeechOutput.h"
-#include "SemanticAnalysis.h"
+#include "common.h"
 
 using namespace std;
+using namespace qrobot;
 
 void waitingForSpeechInput();
-bool login();
 void searchForBooks();
 void personalInformationManage();
+
+void randomMove();
 
 int main()
 {
@@ -30,22 +30,7 @@ void waitingForSpeechInput()
 		if (SemanticAnalysis::Instance()->synonymous(speechInput, "登录"))
 		{
 			cout << "登录" << endl;
-			bool successful = false;
-		  while	(!(successful = login()))
-		  {
-				SpeechOutput::Instance()->speakUp("密码错误");
-				SpeechOutput::Instance()->speakUp("是否需要重新登录");
-				speechInput = SpeechInput::Instance()->waitingForInput();
-		    if (SemanticAnalysis::Instance()->synonymous(speechInput, "是"))
-				{
-					continue;
-				}
-				else
-				{
-					break;
-				}
-			}
-			if (successful)
+			if( Logger::Instance()->logIn())
 			{
 				SpeechOutput::Instance()->speakUp("登录成功");
 				//登录成功操作
@@ -61,6 +46,7 @@ void waitingForSpeechInput()
 		}
 		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "查询个人信息"))
 		{
+			randomMove();
 			personalInformationManage();
 		}
 		else if(SemanticAnalysis::Instance()->synonymous(speechInput, "再见"))
@@ -75,27 +61,6 @@ void waitingForSpeechInput()
 	SpeechOutput::Instance()->speakUp("线程结束");
 }
 
-bool login()
-{
-	string id;
-	string password;
-	SpeechOutput::Instance()->speakUp("请出示您的借书证");
-	//图像检测
-	SpeechOutput::Instance()->speakUp("请输入您的密码");
-  cin >> password;
-	//尝试登录
-	//登录成功
-	//检查数据库
-	//更新数据库
-	if (password == "password")
-	{
-	  return true;
-	}
-	else
-	{
-		return false;
-	}
-}
 
 void searchForBooks()
 {
@@ -139,4 +104,23 @@ void searchForBooks()
 
 void personalInformationManage()
 {
+}
+
+void randomMove()
+{
+	QrobotController::Instance().HorizontalHead(2, -80);
+	QrobotController::Instance().LeftWingUp(2, 10);
+	QrobotController::Instance().RightWingUp(2, 10);
+  sleep(1);
+	QrobotController::Instance().HorizontalHead(2, 80);
+	QrobotController::Instance().LeftWingDown(2, 10);
+	QrobotController::Instance().RightWingDown(2, 10);
+  sleep(1);
+
+  int *headPosition = QrobotController::Instance().GetHeadPosition();
+	cout << "Head Horizon Position: ";
+	cout << headPosition[0] << '\n';
+	cout << "Head Vertical Position: ";
+	cout << headPosition[1] << '\n';
+
 }

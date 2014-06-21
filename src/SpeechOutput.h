@@ -1,5 +1,9 @@
 //SpeechOutput.h
 //class SpeechOutput
+
+#ifndef _SPEECHOUTPUT_H_
+#define _SPEECHOUTPUT_H_
+
 #include <string>
 #include <iostream>
 
@@ -16,3 +20,5 @@ private:
   static SpeechOutput *instance;
 
 };
+
+#endif

@@ -1,15 +1,20 @@
 //LightOutput.h
 //class LightOutput
 
-class LightOutput
+#ifndef _CAMERAINPUT_H_
+#define _CAMERAINPUT_H_
+
+class CameraInput 
 {
 public:
-  static LightOutput* Instance();
+  static CameraInput* Instance();
 	
 protected:
-  LightOutput();
+  CameraInput();
 
 private:
-  static LightOutput *instance;
+  static CameraInput*instance;
 
 };
+
+#endif
