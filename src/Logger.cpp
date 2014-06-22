@@ -2,7 +2,6 @@
 
 #include "Logger.h"
 
-#include "common.h"
 
 using namespace std;
 

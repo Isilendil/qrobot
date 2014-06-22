@@ -1,8 +1,10 @@
 
 main : main.o SpeechInput.o SpeechOutput.o  \
-       SemanticAnalysis.o Logger.o
+       SemanticAnalysis.o Logger.o BookSearcher.o PersonalAssistant.o \
+			 CharacterSegmentation.o CharacterRecognition.o
 	g++ main.o SpeechInput.o SpeechOutput.o  \
-	    SemanticAnalysis.o Logger.o \
+	    SemanticAnalysis.o Logger.o BookSearcher.o PersonalAssistant.o \
+			CharacterSegmentation.o CharacterRecognition.o \
 			-L"../lib" -lqcontroller \
 			-o ../bin/main -pthread -std=c++0x; \
 	export LD_LIBRARY_PATH="../lib":$$LD_LIBRARY_PATH
@@ -22,18 +24,27 @@ SemanticAnalysis.o : common.h SemanticAnalysis.h SemanticAnalysis.cpp
 Logger.o : common.h Logger.h Logger.cpp
 	g++ -c Logger.cpp
 
+BookSearcher.o : common.h BookSearcher.h BookSearcher.cpp
+	g++ -c BookSearcher.cpp
+
+PersonalAssistant.o : common.h PersonalAssistant.h PersonalAssistant.cpp
+	g++ -c PersonalAssistant.cpp
+
+CharacterSegmentation.o : common.h CharacterSegmentation.h CharacterSegmentation.cpp
+	g++ -c CharacterSegmentation.cpp
+
+CharacterRecognition.o : common.h CharacterRecognition.h CharacterRecognition.cpp
+	g++ -c CharacterRecognition.cpp
 
 #DataBaseInput.o : DataBaseInput.h DataBaseInput.cpp
 	#g++ -c DataBaseInput.cpp
 #
-#DataBaseOutput.o : DataBaseOutput.h DataBaseOutput.cpp
-	#g++ -c DataBaseOutput.cpp
+#Database.o : Database.h Database.cpp
+	#g++ -c Database.cpp
 #
-#DiskInput.o : DiskInput.h DiskInput.cpp
-	#g++ -c DiskInput.cpp
+#Disk.o : Disk.h Disk.cpp
+	#g++ -c Disk.cpp
 #
-#DiskOutput.o : DiskOutput.h DiskOutput.cpp
-	#g++ -c DiskOutput.cpp
 #
 #CameraInput.o : CameraInput.h CameraInput.cpp
 	#g++ -c CameraInput.cpp
@@ -44,4 +55,5 @@ Logger.o : common.h Logger.h Logger.cpp
 
 clean : 
 	rm ../bin/main main.o SpeechInput.o SpeechOutput.o  \
-	        SemanticAnalysis.o Logger.o
+	        SemanticAnalysis.o Logger.o BookSearcher.o PersonalAssistant.o \
+					CharacterSegmentation.o CharacterRecognition

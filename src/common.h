@@ -8,6 +8,11 @@
 #include "../include/QrobotController.h"
 
 #include "Logger.h"
+#include "BookSearcher.h"
+#include "PersonalAssistant.h"
 #include "SemanticAnalysis.h"
+
+#include <string>
+#include <iostream>
 
 #endif

@@ -1,14 +1,14 @@
-#include <iostream>
-#include <unistd.h>
-#include <thread>
+//main.cpp
 
 #include "common.h"
+
+#include <thread>
+#include <unistd.h>
 
 using namespace std;
 using namespace qrobot;
 
 void waitingForSpeechInput();
-void searchForBooks();
 void personalInformationManage();
 
 void randomMove();
@@ -42,12 +42,11 @@ void waitingForSpeechInput()
 		}
 		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "查询图书"))
 		{
-			searchForBooks();
+			BookSearcher::Instance()->search();
 		}
 		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "查询个人信息"))
 		{
 			randomMove();
-			personalInformationManage();
 		}
 		else if(SemanticAnalysis::Instance()->synonymous(speechInput, "再见"))
 		{
@@ -62,49 +61,7 @@ void waitingForSpeechInput()
 }
 
 
-void searchForBooks()
-{
-	bool inputError = true;
-	string speechInput;
-	do
-	{
-	  SpeechOutput::Instance()->speakUp("请选择查询方式");
-	  SpeechOutput::Instance()->speakUp("题名责任者还是ISBN号");
-		speechInput = SpeechInput::Instance()->waitingForInput();
-		if (SemanticAnalysis::Instance()->synonymous(speechInput, "题名"))
-		{
-			//search
-			inputError = false;
-		}
-		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "责任者"))
-		{
-			//search
-			inputError = false;
-		}
-		else if (SemanticAnalysis::Instance()->synonymous(speechInput, "ISBN号"))
-		{
-			//search
-			inputError = false;
-		}
-		else
-		{
-			SpeechOutput::Instance()->speakUp("输入错误");
-			SpeechOutput::Instance()->speakUp("是否重新选择");
-		  speechInput = SpeechInput::Instance()->waitingForInput();
-			if (SemanticAnalysis::Instance()->synonymous(speechInput, "是"))
-			{
-			}
-			else
-			{
-				inputError = false;
-			}
-		}
-	} while (inputError);
-}
 
-void personalInformationManage()
-{
-}
 
 void randomMove()
 {

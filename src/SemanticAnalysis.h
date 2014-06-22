@@ -4,7 +4,7 @@
 #ifndef _SEMANTICANALYSIS_H_
 #define _SEMANTICANALYSIS_H_
 
-#include <string>
+#include "common.h"
 
 class SemanticAnalysis 
 {
