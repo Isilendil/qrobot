@@ -56,4 +56,4 @@ CharacterRecognition.o : common.h CharacterRecognition.h CharacterRecognition.cp
 clean : 
 	rm ../bin/main main.o SpeechInput.o SpeechOutput.o  \
 	        SemanticAnalysis.o Logger.o BookSearcher.o PersonalAssistant.o \
-					CharacterSegmentation.o CharacterRecognition
+					CharacterSegmentation.o CharacterRecognition.o

@@ -9,7 +9,6 @@ using namespace std;
 using namespace qrobot;
 
 void waitingForSpeechInput();
-void personalInformationManage();
 
 void randomMove();
 
